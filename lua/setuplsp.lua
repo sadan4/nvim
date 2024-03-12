@@ -5,6 +5,12 @@ capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
+require("lspconfig").pyright.setup({
+	capabilities = capabilities,
+})
+require("lspconfig").tsserver.setup({
+	capabilities = capabilities,
+})
 --
 require("lspconfig").kotlin_language_server.setup({
 	capabilities = capabilities,
@@ -48,7 +54,7 @@ require("lspconfig").lua_ls.setup({
 })
 
 local luasnip = require("luasnip")
-
+local pairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")
 cmp.setup({
 	snippet = {
@@ -60,7 +66,7 @@ cmp.setup({
 		--    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
 		--  ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
 		-- C-b (back) C-f (forward) for snippet placeholder navigation.
-		   ['<C-Space>'] = cmp.mapping.complete(),
+		["<C-Space>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
@@ -87,5 +93,7 @@ cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
+		{ name = "hrsh7th/cmp-nvim-lsp-signature-help" },
 	},
 })
+cmp.event:on("confirm_done", pairs.on_confirm_done())

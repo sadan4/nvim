@@ -2,7 +2,7 @@
 -- https://github.com/mhartington/formatter.nvim/tree/master/lua/formatter/filetypes
 -- Utilities for creating configurations
 local util = require("formatter.util")
-
+local defaults = require("formatter.defaults")
 -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
 require("formatter").setup({
 	-- Enable or disable logging
@@ -13,6 +13,10 @@ require("formatter").setup({
 	filetype = {
 		-- Formatter configurations for filetype "lua" go here
 		-- and will be executed in order
+		typescript = {
+			require("formatter.filetypes.typescript").eslint_d,
+			util.copyf(defaults.eslint_d),
+		},
 		kotlin = {
 			require("formatter.filetypes.kotlin").ktlint,
 			function()

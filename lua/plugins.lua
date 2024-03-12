@@ -2,6 +2,9 @@ local plugins = {
 	{
 		"williamboman/mason.nvim",
 	},
+    {
+        "ray-x/lsp_signature.nvim"
+    },
 	{
 		"williamboman/mason-lspconfig.nvim",
 	},

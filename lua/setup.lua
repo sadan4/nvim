@@ -16,3 +16,5 @@ require("setuptabout")
 require("setupufo")
 
 require("setupcomment")
+-- setup function signature
+require("setupsig")
