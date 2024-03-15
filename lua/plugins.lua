@@ -11,6 +11,9 @@ local plugins = {
 	{
 		"neovim/nvim-lspconfig",
 	},
+    {
+        "p00f/clangd_extensions.nvim",
+    },
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },

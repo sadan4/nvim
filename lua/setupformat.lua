@@ -11,11 +11,45 @@ require("formatter").setup({
 	log_level = vim.log.levels.WARN,
 	-- All formatter configurations are opt-in
 	filetype = {
+		yaml = {
+			require("formatter.filetypes.yaml").yamlfmt,
+			function()
+				return {
+					exe = "yamlfmt",
+					args = { "-in" },
+					stdin = true,
+				}
+			end,
+		},
 		-- Formatter configurations for filetype "lua" go here
 		-- and will be executed in order
 		typescript = {
 			require("formatter.filetypes.typescript").eslint_d,
 			util.copyf(defaults.eslint_d),
+		},
+		cpp = {
+			require("formatter.filetypes.c").clangformat,
+			function()
+				return {
+					util.copyf(defaults.clangformat),
+				}
+			end,
+		},
+		h = {
+			require("formatter.filetypes.c").clangformat,
+			function()
+				return {
+					util.copyf(defaults.clangformat),
+				}
+			end,
+		},
+		c = {
+			require("formatter.filetypes.c").clangformat,
+			function()
+				return {
+					util.copyf(defaults.clangformat),
+				}
+			end,
 		},
 		kotlin = {
 			require("formatter.filetypes.kotlin").ktlint,

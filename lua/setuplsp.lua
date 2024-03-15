@@ -5,6 +5,24 @@ capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
+
+require("lspconfig").yamlls.setup({
+	capabilities = capabilities,
+	settings = {
+		yaml = {
+			schemas = {
+				["/home/meyer/.config/nvim/clangdschema.json"] = "/.clangd",
+			},
+		},
+	},
+})
+require("lspconfig").clangd.setup({
+	capabilities = capabilities,
+    cmd = {
+        "clangd",
+        "--header-insertion=iwyu"
+    }
+})
 require("lspconfig").pyright.setup({
 	capabilities = capabilities,
 })
@@ -48,9 +66,6 @@ require("lspconfig").lua_ls.setup({
 			},
 		})
 	end,
-	settings = {
-		Lua = {},
-	},
 })
 
 local luasnip = require("luasnip")
@@ -97,3 +112,4 @@ cmp.setup({
 	},
 })
 cmp.event:on("confirm_done", pairs.on_confirm_done())
+require("setupclangdext")

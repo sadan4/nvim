@@ -42,3 +42,5 @@ vim.keymap.set({ "i", "n" }, "<C-\\>", vim.cmd.vsplit, {})
 -- vscode fold and unfold
 vim.keymap.set("n", "<C-[>", "zc", {})
 vim.keymap.set("n", "<C-]>", "zo", {})
+-- clangd switch source/header
+vim.keymap.set({ "i", "n" }, "<A-o>", vim.cmd.ClangdSwitchSourceHeader, { silent = true })
