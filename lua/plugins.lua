@@ -2,18 +2,19 @@ local plugins = {
 	{
 		"williamboman/mason.nvim",
 	},
-    {
-        "ray-x/lsp_signature.nvim"
-    },
+	{
+		"ray-x/lsp_signature.nvim",
+	},
 	{
 		"williamboman/mason-lspconfig.nvim",
 	},
 	{
 		"neovim/nvim-lspconfig",
 	},
-    {
-        "p00f/clangd_extensions.nvim",
-    },
+	{ "folke/neodev.nvim", opts = {} },
+	{
+		"p00f/clangd_extensions.nvim",
+	},
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },

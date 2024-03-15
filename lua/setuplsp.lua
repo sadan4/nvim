@@ -1,4 +1,7 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+require("neodev").setup({
+  -- add any options here, or leave empty to use the default settings
+})
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 capabilities.textDocument.foldingRange = {
@@ -18,10 +21,10 @@ require("lspconfig").yamlls.setup({
 })
 require("lspconfig").clangd.setup({
 	capabilities = capabilities,
-    cmd = {
-        "clangd",
-        "--header-insertion=iwyu"
-    }
+	cmd = {
+		"clangd",
+		"--header-insertion=iwyu",
+	},
 })
 require("lspconfig").pyright.setup({
 	capabilities = capabilities,
@@ -55,17 +58,18 @@ require("lspconfig").lua_ls.setup({
 			-- Make the server aware of Neovim runtime files
 			workspace = {
 				checkThirdParty = false,
-				library = {
-					vim.env.VIMRUNTIME,
-					-- Depending on the usage, you might want to add additional paths here.
-					-- "${3rd}/luv/library"
-					-- "${3rd}/busted/library",
-				},
 				-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-				-- library = vim.api.nvim_get_runtime_file("", true)
+				library = vim.api.nvim_get_runtime_file("", true)
 			},
 		})
 	end,
+	settings = {
+		Lua = {
+			completion = {
+				callSnippet = "Replace",
+			},
+		},
+	},
 })
 
 local luasnip = require("luasnip")
