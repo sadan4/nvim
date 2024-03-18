@@ -49,3 +49,8 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, {})
+-- copy and paste
+vim.keymap.set("v", "<A-c>", "\"+y", {})
+vim.keymap.set("n", "<A-c>", "\"+yy", {})
+vim.keymap.set("v", "<A-v>", "\"+p", {})
+vim.keymap.set("n", "<A-v>", "\"+p", {})
