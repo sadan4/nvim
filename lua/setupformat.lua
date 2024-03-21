@@ -21,11 +21,34 @@ require("formatter").setup({
 				}
 			end,
 		},
+		java = {
+			require("formatter.filetypes.java").clangformat,
+			function()
+				return {
+					exe = "clang-format",
+					args = {
+						"--style=Google",
+						"--assume-filename=.java",
+					},
+					stdin = true,
+				}
+			end,
+		},
 		-- Formatter configurations for filetype "lua" go here
 		-- and will be executed in order
 		typescript = {
 			require("formatter.filetypes.typescript").eslint_d,
-			util.copyf(defaults.eslint_d),
+			function()
+				return {
+					args = {
+						"--stdin",
+						"--fix-to-stdout",
+					},
+					exe = "eslint_d",
+					stdin = true,
+					try_node_modules = true,
+				}
+			end,
 		},
 		cpp = {
 			require("formatter.filetypes.c").clangformat,

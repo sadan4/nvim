@@ -26,6 +26,12 @@ require("lspconfig").clangd.setup({
 		"--header-insertion=iwyu",
 	},
 })
+require("lspconfig").prismals.setup({
+	capabilities = capabilities,
+})
+require("lspconfig").asm_lsp.setup({
+	capabilities = capabilities,
+})
 require("lspconfig").pyright.setup({
 	capabilities = capabilities,
 })
