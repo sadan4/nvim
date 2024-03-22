@@ -1,5 +1,11 @@
 local plugins = {
 	{
+		"jose-elias-alvarez/null-ls.nvim",
+	},
+	{
+		"MunifTanjim/eslint.nvim",
+	},
+	{
 		"williamboman/mason.nvim",
 	},
 	{
