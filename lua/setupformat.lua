@@ -11,6 +11,16 @@ require("formatter").setup({
 	log_level = vim.log.levels.WARN,
 	-- All formatter configurations are opt-in
 	filetype = {
+		json = {
+			require("formatter.filetypes.json").prettierd,
+			function()
+				return {
+					exe = "prettierd",
+					args = { util.escape_path(util.get_current_buffer_file_path()) },
+					stdin = true,
+				}
+			end,
+		},
 		yaml = {
 			require("formatter.filetypes.yaml").yamlfmt,
 			function()

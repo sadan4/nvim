@@ -54,3 +54,5 @@ vim.keymap.set("v", "<A-c>", "\"+y", {})
 vim.keymap.set("n", "<A-c>", "\"+yy", {})
 vim.keymap.set("v", "<A-v>", "\"+p", {})
 vim.keymap.set("n", "<A-v>", "\"+p", {})
+-- lsp rename
+vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, {})
