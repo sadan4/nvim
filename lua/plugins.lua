@@ -1,5 +1,11 @@
 local plugins = {
 	{
+		"lambdalisue/suda.vim",
+	},
+    {
+            "andweeb/presence.nvim"
+    },
+	{
 		"jose-elias-alvarez/null-ls.nvim",
 	},
 	{

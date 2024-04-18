@@ -6,4 +6,11 @@ vim.opt.shiftround = true
 vim.opt.shiftwidth = 4
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
-vim.opt.scrolloff = 4
+vim.opt.scrolloff = 6
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+
+	callback = function()
+		package.loaded.presence:update()
+	end,
+})
