@@ -11,6 +11,16 @@ require("formatter").setup({
 	log_level = vim.log.levels.WARN,
 	-- All formatter configurations are opt-in
 	filetype = {
+		nix = {
+			require("formatter.filetypes.nix").nixpkgs_fmt,
+			function()
+				return {
+					exe = "nixpkgs-fmt",
+					stdin = true,
+					args = {},
+				}
+			end,
+		},
 		json = {
 			require("formatter.filetypes.json").prettierd,
 			function()

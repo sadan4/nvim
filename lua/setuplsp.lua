@@ -8,7 +8,9 @@ capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
-
+require("lspconfig").nil_ls.setup({
+    capabilities = capabilities,
+})
 require("lspconfig").jsonls.setup({
 	capabilities = capabilities,
 })
