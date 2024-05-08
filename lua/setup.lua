@@ -19,4 +19,6 @@ require("setupcomment")
 -- setup function signature
 require("setupsig")
 
+require("setuplualine")
+
 require("setupDiscord")

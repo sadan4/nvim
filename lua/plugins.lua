@@ -2,9 +2,21 @@ local plugins = {
 	{
 		"lambdalisue/suda.vim",
 	},
-    {
-            "andweeb/presence.nvim"
-    },
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	{
+		"andweeb/presence.nvim",
+	},
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 	},
