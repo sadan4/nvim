@@ -2,6 +2,9 @@ local plugins = {
 	{
 		"lambdalisue/suda.vim",
 	},
+    {
+        "windwp/nvim-ts-autotag"
+    },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

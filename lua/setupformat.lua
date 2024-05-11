@@ -70,6 +70,48 @@ require("formatter").setup({
 				}
 			end,
 		},
+		typescriptreact = {
+			require("formatter.filetypes.typescriptreact").eslint_d,
+			function()
+				return {
+					args = {
+						"--stdin",
+						"--fix-to-stdout",
+					},
+					exe = "eslint_d",
+					stdin = true,
+					try_node_modules = true,
+				}
+			end,
+		},
+        javascript = {
+            require("formatter.filetypes.javascript").eslint_d,
+            function ()
+                return {
+   					args = {
+						"--stdin",
+						"--fix-to-stdout",
+					},
+					exe = "eslint_d",
+					stdin = true,
+					try_node_modules = true,
+             }
+            end
+        },
+        javascriptreact = {
+            require("formatter.filetypes.javascriptreact").eslint_d,
+            function ()
+                return {
+   					args = {
+						"--stdin",
+						"--fix-to-stdout",
+					},
+					exe = "eslint_d",
+					stdin = true,
+					try_node_modules = true,
+             }
+            end
+        },
 		cpp = {
 			require("formatter.filetypes.c").clangformat,
 			function()
