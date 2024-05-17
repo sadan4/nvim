@@ -1,4 +1,6 @@
 local tb = require("telescope.builtin")
+
+vim.g.mapleader = " "
 -- find Files
 vim.keymap.set("n", "<C-f>f", tb.find_files, {})
 -- find Text
@@ -50,10 +52,14 @@ vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, {})
 -- copy and paste
-vim.keymap.set("v", "<A-c>", "\"+y", {})
-vim.keymap.set("n", "<A-c>", "\"+yy", {})
-vim.keymap.set("v", "<A-v>", "\"+p", {})
-vim.keymap.set("n", "<A-v>", "\"+p", {})
+vim.keymap.set("v", "<A-c>", '"+y', {})
+vim.keymap.set("n", "<A-c>", '"+yy', {})
+vim.keymap.set("v", "<A-v>", '"+p', {})
+vim.keymap.set("n", "<A-v>", '"+p', {})
 -- lsp rename
 vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, {})
-vim.keymap.set({"n", "v"}, ";", ":")
+vim.keymap.set({ "n", "v" }, ";", ":")
+
+vim.keymap.set("n", "<leader>/", ":call eregex#toggle()<CR>", {
+	noremap = true,
+})

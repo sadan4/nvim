@@ -3,6 +3,9 @@ local plugins = {
 		"lambdalisue/suda.vim",
 	},
     {
+        "sadan4/eregex.vim"
+    },
+    {
         "windwp/nvim-ts-autotag"
     },
 	{

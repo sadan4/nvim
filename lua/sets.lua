@@ -7,6 +7,8 @@ vim.opt.shiftwidth = 4
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.scrolloff = 6
+-- eregex.vim 
+vim.g.eregex_default_enable = 1
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
