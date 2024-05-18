@@ -9,6 +9,9 @@ capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 
+require'lspconfig'.nginx_language_server.setup{
+    capabilities = capabilities,
+}
 require("lspconfig").bashls.setup({
     capabilities = capabilities,
 })
