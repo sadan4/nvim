@@ -3,7 +3,10 @@ require("neodev").setup({
 	-- add any options here, or leave empty to use the default settings
 })
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+require'lspconfig'.emmet_ls.setup{
+    capabilities = capabilities,
+}
 capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
@@ -15,6 +18,9 @@ require'lspconfig'.nginx_language_server.setup{
 require("lspconfig").bashls.setup({
     capabilities = capabilities,
 })
+require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
 require("lspconfig").nil_ls.setup({
     capabilities = capabilities,
 })
