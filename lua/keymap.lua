@@ -45,7 +45,7 @@ vim.keymap.set({ "i", "n" }, "<C-\\>", vim.cmd.vsplit, {})
 vim.keymap.set("n", "<C-[>", "zc", {})
 vim.keymap.set("n", "<C-]>", "zo", {})
 -- clangd switch source/header
-vim.keymap.set({ "i", "n" }, "<leader>o", vim.cmd.ClangdSwitchSourceHeader, { silent = true })
+vim.keymap.set({ "n" }, "<leader>o", vim.cmd.ClangdSwitchSourceHeader, { silent = true })
 -- goto mappings
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
