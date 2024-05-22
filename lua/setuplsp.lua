@@ -45,7 +45,7 @@ local function setupJDTLS()
 	--   local bundles = {
 	--   vim.fn.glob(vim.fn.expand '~/.config/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.52.0.jar', true),
 	-- }
-	-- vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.stdpath 'config' .. '/resources/vscode-java-test-main/server/*.jar', true), '\n'))
+	-- -- vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.stdpath 'config' .. '/resources/vscode-java-test-main/server/*.jar', true), '\n'))
 	local function makeandgetpath()
         local root = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'});
 		local path =  root .. "./data"
