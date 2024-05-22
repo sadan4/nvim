@@ -1,13 +1,19 @@
 local plugins = {
+    {
+        "mfussenegger/nvim-jdtls"
+    },
+	{
+		"olrtg/nvim-emmet",
+	},
 	{
 		"lambdalisue/suda.vim",
 	},
-    {
-        "sadan4/eregex.vim"
-    },
-    {
-        "windwp/nvim-ts-autotag"
-    },
+	{
+		"sadan4/eregex.vim",
+	},
+	{
+		"windwp/nvim-ts-autotag",
+	},
 	{
 		"barrett-ruth/live-server.nvim",
 		build = "pnpm add -g live-server",

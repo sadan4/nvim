@@ -10,9 +10,104 @@ capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 
-require'lspconfig'.emmet_ls.setup{
-    capabilities = capabilities,
-}
+-- jdtls
+local function setupJDTLS()
+	local mason_registry = require("mason-registry")
+	local jdtls = require("jdtls")
+
+	-- Early termination if jdtls is not installed
+	if not mason_registry.is_installed("jdtls") then
+		print("jdtls is not installed via Mason.")
+		return
+	end
+	local function find_launcher_jar(jdtls_path)
+		local plugins_path = jdtls_path .. "/plugins"
+		local find_command = "find '"
+			.. plugins_path
+			.. "' -type f -name 'org.eclipse.equinox.launcher_*.jar' -print -quit"
+
+		local handle = io.popen(find_command)
+
+		if handle == nil then
+			return
+		end
+
+		local result = handle:read("*l") -- Read only the first line of output
+		handle:close()
+
+		return result -- directly return the path
+	end
+	local jdtls_path = mason_registry.get_package("jdtls"):get_install_path()
+	local path_to_launcher = find_launcher_jar(jdtls_path)
+	local path_to_lsp_server = jdtls_path .. "/config_linux"
+	local lombok_path = jdtls_path .. "/lombok.jar"
+
+	--   local bundles = {
+	--   vim.fn.glob(vim.fn.expand '~/.config/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.52.0.jar', true),
+	-- }
+	-- vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.stdpath 'config' .. '/resources/vscode-java-test-main/server/*.jar', true), '\n'))
+	local function makeandgetpath()
+        local root = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'});
+		local path =  root .. "./data"
+		os.execute("mkdir -p " .. path)
+		return path
+	end
+	local config = {
+		cmd = {
+			os.getenv("JAVA_HOME") .. "/bin/java",
+			"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+			"-Dosgi.bundles.defaultStartLevel=4",
+			"-Declipse.product=org.eclipse.jdt.ls.core.product",
+			"-Dlog.protocol=true",
+			"-Dlog.level=ALL",
+			-- '-javaagent:' .. lombok_path, -- Why?
+			"-Xmx1g",
+			"--add-modules=ALL-SYSTEM",
+			"--add-opens",
+			"java.base/java.util=ALL-UNNAMED",
+			"--add-opens",
+			"java.base/java.lang=ALL-UNNAMED",
+			"-jar",
+			path_to_launcher,
+			"-configuration",
+			path_to_lsp_server,
+			"-data",
+			makeandgetpath(),
+		},
+
+		root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
+
+		-- Further configuration
+		settings = {
+			java = {},
+		},
+
+		flags = {
+			allow_incremental_sync = true,
+		},
+
+		init_options = {
+			-- bundles = bundles,
+			bundles = {},
+		},
+	}
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "java",
+		callback = function()
+			jdtls.start_or_attach(config)
+			-- require("jdtls").setup_dap()
+			vim.keymap.set({ "n", "i" }, "<A-F>", function()
+				require("jdtls").organize_imports()
+				vim.lsp.buf.format()
+			end, {})
+		end,
+	})
+end
+setupJDTLS()
+-- ENDjdtls
+require("lspconfig").emmet_language_server.setup({
+	capabilities = capabilities,
+})
 require("lspconfig").cssls.setup({
 	capabilities = capabilities,
 })
@@ -22,9 +117,9 @@ require("lspconfig").nginx_language_server.setup({
 require("lspconfig").bashls.setup({
 	capabilities = capabilities,
 })
-require'lspconfig'.html.setup {
-  capabilities = capabilities,
-}
+require("lspconfig").html.setup({
+	capabilities = capabilities,
+})
 require("lspconfig").nil_ls.setup({
 	capabilities = capabilities,
 })
@@ -62,10 +157,6 @@ require("lspconfig").tsserver.setup({
 })
 --
 require("lspconfig").kotlin_language_server.setup({
-	capabilities = capabilities,
-})
---Java
-require("lspconfig").java_language_server.setup({
 	capabilities = capabilities,
 })
 --Lua

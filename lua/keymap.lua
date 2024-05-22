@@ -69,3 +69,4 @@ vim.keymap.set("n", "<leader>w", ":SudaWrite<CR>", {
 vim.keymap.set("n", "<leader>h", ":%S/", {
 	noremap = true,
 })
+vim.keymap.set({ "n", "v" }, "<leader>se", require("nvim-emmet").wrap_with_abbreviation)
