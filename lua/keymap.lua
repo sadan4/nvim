@@ -28,12 +28,6 @@ end, {})
 vim.keymap.set({ "i", "n" }, "<A-S-Down>", function()
 	vim.api.nvim_feedkeys("yyp", "x", false)
 end, {})
--- on <C-Space> in normal, insert and start autoComp
-vim.keymap.set("n", "<C-Space>", function()
-	vim.api.nvim_feedkeys("i", "m", false)
-	local key1 = vim.api.nvim_replace_termcodes("<C-Space>", true, false, true)
-	vim.api.nvim_feedkeys(key1, "m", false)
-end, {})
 -- toggle function signature
 vim.keymap.set("i", "<C-S-Space>", function()
 	require("lsp_signature").toggle_float_win()
@@ -70,3 +64,8 @@ vim.keymap.set("n", "<leader>h", ":%S/", {
 	noremap = true,
 })
 vim.keymap.set({ "n", "v" }, "<leader>se", require("nvim-emmet").wrap_with_abbreviation)
+-- open command line with the path of current buffer already inserted
+vim.keymap.set("n", "<leader>e", function()
+    -- print((":e " .. string.gsub(vim.fn.expand("%"), '(.*/)(.*)', '%1')));
+	vim.api.nvim_feedkeys((":e " .. string.gsub(vim.fn.expand("%"), "(.*/)(.*)", "%1")), "L", false)
+end)
