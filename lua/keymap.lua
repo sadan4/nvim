@@ -72,3 +72,4 @@ vim.keymap.set("n", "<leader>e", function()
     -- print((":e " .. string.gsub(vim.fn.expand("%"), '(.*/)(.*)', '%1')));
 	vim.api.nvim_feedkeys((":e " .. string.gsub(vim.fn.expand("%"), "(.*/)(.*)", "%1")), "L", false)
 end)
+vim.keymap.set("n", "<leader>c", ":let @+=@\"<CR>")
