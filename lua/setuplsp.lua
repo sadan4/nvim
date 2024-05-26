@@ -47,8 +47,11 @@ local function setupJDTLS()
 	-- }
 	-- -- vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.stdpath 'config' .. '/resources/vscode-java-test-main/server/*.jar', true), '\n'))
 	local function makeandgetpath()
-        local root = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'});
-		local path =  root .. "./data"
+		local root = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" })
+		if root == nil then
+			return nil
+		end
+		local path = root .. "./data"
 		os.execute("mkdir -p " .. path)
 		return path
 	end
@@ -75,7 +78,7 @@ local function setupJDTLS()
 			makeandgetpath(),
 		},
 
-		root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
+		root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" }),
 
 		-- Further configuration
 		settings = {

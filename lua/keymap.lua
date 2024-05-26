@@ -60,6 +60,9 @@ vim.keymap.set("n", "<leader>/", ":call eregex#toggle()<CR>", {
 vim.keymap.set("n", "<leader>w", ":SudaWrite<CR>", {
 	noremap = true,
 })
+vim.keymap.set("v", "<leader>h", ":S/", {
+	noremap = true,
+})
 vim.keymap.set("n", "<leader>h", ":%S/", {
 	noremap = true,
 })
