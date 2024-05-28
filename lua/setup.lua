@@ -4,6 +4,8 @@ vim.cmd([[colorscheme tokyonight]])
 require("mason").setup()
 require("mason-lspconfig").setup()
 
+require("masonDownload")
+
 require("setuplsp")
 
 require("setupformat")
