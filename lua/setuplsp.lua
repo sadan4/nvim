@@ -13,7 +13,6 @@ capabilities.textDocument.foldingRange = {
 -- jdtls
 local function setupJDTLS()
 	local mason_registry = require("mason-registry")
-	local jdtls = require("jdtls")
 
 	-- Early termination if jdtls is not installed
 	if not mason_registry.is_installed("jdtls") then
@@ -94,19 +93,20 @@ local function setupJDTLS()
 			bundles = {},
 		},
 	}
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "java",
-		callback = function()
-			jdtls.start_or_attach(config)
-			-- require("jdtls").setup_dap()
-			vim.keymap.set({ "n", "i" }, "<A-F>", function()
-				require("jdtls").organize_imports()
-				vim.lsp.buf.format()
-			end, {})
-		end,
-	})
+	return config
 end
-setupJDTLS()
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "java",
+	callback = function()
+		local jdtls = require("jdtls")
+		jdtls.start_or_attach(setupJDTLS())
+		-- require("jdtls").setup_dap()
+		vim.keymap.set({ "n", "i" }, "<A-F>", function()
+			require("jdtls").organize_imports()
+			vim.lsp.buf.format()
+		end, {})
+	end,
+})
 -- ENDjdtls
 require("lspconfig").emmet_language_server.setup({
 	capabilities = capabilities,
