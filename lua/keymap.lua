@@ -73,3 +73,22 @@ vim.keymap.set("n", "<leader>e", function()
 	vim.api.nvim_feedkeys((":e " .. string.gsub(vim.fn.expand("%"), "(.*/)(.*)", "%1")), "L", false)
 end)
 vim.keymap.set("n", "<leader>c", ":let @+=@\"<CR>")
+-- training
+vim.keymap.set("n", "<Left>", ':echoe "Use h"<CR>')
+vim.keymap.set("n", "<Right>", ':echoe "Use l"<CR>')
+vim.keymap.set("n", "<Up>", ':echoe "Use k"<CR>')
+vim.keymap.set("n", "<Down>", ':echoe "Use j"<CR>')
+
+vim.keymap.set("i", "<Left>", '<ESC>:echoe "Use h"<CR>i')
+vim.keymap.set("i", "<Right>", '<ESC>:echoe "Use l"<CR>i')
+vim.keymap.set("i", "<Up>", '<ESC>:echoe "Use k"<CR>i')
+vim.keymap.set("i", "<Down>", '<ESC>:echoe "Use j"<CR>i')
+-- https://stackoverflow.com/questions/1841480/how-to-use-lowercase-marks-as-global-in-vim
+-- Use lowercase for global marks and uppercase for local marks.
+local low = function(i) return string.char(97+i) end
+local upp = function(i) return string.char(65+i) end
+
+for i=0,25 do vim.keymap.set("n", "m"..low(i), "m"..upp(i)) end
+for i=0,25 do vim.keymap.set("n", "m"..upp(i), "m"..low(i)) end
+for i=0,25 do vim.keymap.set("n", "'"..low(i), "'"..upp(i)) end
+for i=0,25 do vim.keymap.set("n", "'"..upp(i), "'"..low(i)) end

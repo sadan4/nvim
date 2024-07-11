@@ -24,3 +24,6 @@ require("setupsig")
 require("setuplualine")
 
 require("setupDiscord")
+require('telescope').load_extension('fzf')
+require("setupbufferline")
+require("setupterminal")

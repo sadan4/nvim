@@ -1,7 +1,42 @@
 local plugins = {
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+	},
     {
-        "mfussenegger/nvim-jdtls"
+        "akinsho/toggleterm.nvim"
     },
+	{
+		dir = "/home/meyer/dev/lua/vencord.nvim",
+	},
+	{
+		"nvim-telescope/telescope-fzf-native.nvim",
+		build = "make",
+	},
+
+	{
+		"kdheepak/lazygit.nvim",
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		-- setting the keybinding for LazyGit with 'keys' is recommended in
+		-- order to load the plugin when the command is run for the first time
+		keys = {
+			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+		},
+	},
+	{
+		"mfussenegger/nvim-jdtls",
+	},
 	{
 		"olrtg/nvim-emmet",
 	},
@@ -105,6 +140,17 @@ local plugins = {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.5",
+		opts = {
+			extensions = {
+				fzf = {
+					fuzzy = true, -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "ignore_case", -- or "ignore_case" or "respect_case" or smart_case
+					-- the default case_mode is "smart_case"
+				},
+			},
+		},
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
