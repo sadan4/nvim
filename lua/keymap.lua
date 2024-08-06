@@ -13,6 +13,8 @@ vim.keymap.set("n", "<C-f>m", tb.keymaps, {})
 vim.keymap.set("n", "<C-f>c", tb.commands, {})
 -- find Documentation
 vim.keymap.set("n", "<C-f>d", tb.man_pages, {})
+-- find symbols 
+vim.keymap.set("n", "<C-f>v", tb.lsp_workspace_symbols, {})
 -- open tree
 vim.keymap.set({ "i", "n" }, "<C-t>", vim.cmd.NvimTreeFocus, {})
 -- move and copy lines
