@@ -95,20 +95,21 @@ local function setupJDTLS()
 	}
 	return config
 end
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "java",
-	callback = function()
-		local jdtls = require("jdtls")
-		jdtls.start_or_attach(setupJDTLS())
-		-- require("jdtls").setup_dap()
-		vim.keymap.set({ "n", "i" }, "<A-F>", function()
-			require("jdtls").organize_imports()
-			vim.lsp.buf.format()
-		end, {})
-	end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "java",
+-- 	callback = function()
+-- 		local jdtls = require("jdtls")
+-- 		jdtls.start_or_attach(setupJDTLS())
+-- 		-- require("jdtls").setup_dap()
+-- 		vim.keymap.set({ "n", "i" }, "<A-F>", function()
+-- 			require("jdtls").organize_imports()
+-- 			vim.lsp.buf.format()
+-- 		end, {})
+-- 	end,
+-- })
 -- ENDjdtls
 require("lspconfig").emmet_language_server.setup({
+    filetypes = {"css", "scss", "sass", "less", "html"}
 	capabilities = capabilities,
 })
 require("lspconfig").cssls.setup({

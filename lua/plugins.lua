@@ -1,12 +1,25 @@
 local plugins = {
 	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+                keymaps = {
+                    visual = "<leader>s",
+                    visual_line = "<leader>s"
+                }
+            })
+		end,
+	},
+	{
 		"akinsho/bufferline.nvim",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 	},
-    {
-        "akinsho/toggleterm.nvim"
-    },
+	{
+		"akinsho/toggleterm.nvim",
+	},
 	{
 		dir = "/home/meyer/dev/lua/vencord.nvim",
 	},
