@@ -1,4 +1,7 @@
 local plugins = {
+    {
+        "christoomey/vim-titlecase"
+    },
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -86,9 +89,9 @@ local plugins = {
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 	},
-	{
-		"MunifTanjim/eslint.nvim",
-	},
+	-- {
+	-- 	"MunifTanjim/eslint.nvim",
+	-- },
 	{
 		"williamboman/mason.nvim",
 	},

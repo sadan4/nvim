@@ -9,7 +9,42 @@ capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,
 }
-
+local root_file = {
+  '.eslintrc',
+  '.eslintrc.js',
+  '.eslintrc.cjs',
+  '.eslintrc.yaml',
+  '.eslintrc.yml',
+  '.eslintrc.json',
+  'eslint.config.js',
+  'eslint.config.mjs',
+  'eslint.config.cjs',
+  'eslint.config.ts',
+  'eslint.config.mts',
+  'eslint.config.cts',
+}
+require"lspconfig".eslint.setup({
+    capabilities = capabilities,
+    -- root_dir = function (fname)
+    --     local rootDir = vim.fs.dirname(vim.fs.find({"package.json", "pnpm-lock.yaml", "node_modules"}, {upward = true})[1])
+    --     local eCode = os.execute([[bash -c "ls -alh -- ]].. rootDir ..[[ | grep --perl-regexp .eslintrc\..\{2,4\}\|eslint.config\..\{2,3\}"]])
+    --     -- if eCode ~= 0 then
+    --     --     print("funny")
+    --     --     return vim.fs.normalize("~/src/estest")
+    --     -- end
+    --     local util = require"lspconfig.util"
+    --     root_file = util.insert_package_json(root_file, 'eslintConfig', fname)
+    --     local a = util.root_pattern(unpack(root_file))(fname)
+    --     print(a)
+    --     return a
+    -- end,
+    -- fix format command on attach
+    on_attach = function (client, bufnr)
+        vim.keymap.set({"n"}, "<A-F>", "<cmd>EslintFixAll<cr>", {
+            buffer = bufnr,
+        })
+    end
+})
 -- jdtls
 local function setupJDTLS()
 	local mason_registry = require("mason-registry")
@@ -109,7 +144,7 @@ end
 -- })
 -- ENDjdtls
 require("lspconfig").emmet_language_server.setup({
-    filetypes = {"css", "scss", "sass", "less", "html"}
+    filetypes = {"css", "scss", "sass", "less", "html"},
 	capabilities = capabilities,
 })
 require("lspconfig").cssls.setup({
@@ -243,22 +278,22 @@ require("setupclangdext")
 
 require("null-ls").setup()
 
-require("eslint").setup({
-	bin = "eslint_d", -- or `eslint`
-	code_actions = {
-		enable = true,
-		apply_on_save = {
-			enable = true,
-			types = { "directive", "problem", "suggestion", "layout" },
-		},
-		disable_rule_comment = {
-			enable = true,
-			location = "separate_line", -- or `same_line`
-		},
-	},
-	diagnostics = {
-		enable = true,
-		report_unused_disable_directives = false,
-		run_on = "type", -- or `save`
-	},
-})
+-- require("eslint").setup({
+-- 	bin = "eslint", -- or `eslint_d`
+-- 	code_actions = {
+-- 		enable = true,
+-- 		apply_on_save = {
+-- 			enable = true,
+-- 			types = { "directive", "problem", "suggestion", "layout" },
+-- 		},
+-- 		disable_rule_comment = {
+-- 			enable = true,
+-- 			location = "separate_line", -- or `same_line`
+-- 		},
+-- 	},
+-- 	diagnostics = {
+-- 		enable = true,
+-- 		report_unused_disable_directives = false,
+-- 		run_on = "type", -- or `save`
+-- 	},
+-- })

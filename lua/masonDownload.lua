@@ -2,7 +2,6 @@ local pkgs = {
 	"nixpkgs-fmt",
 	"jdtls",
 	"yaml-language-server",
-	"eslint_d",
 }
 local reg = require("mason-registry")
 for _, pname in ipairs(pkgs) do

@@ -54,64 +54,39 @@ require("formatter").setup({
 				}
 			end,
 		},
-		-- Formatter configurations for filetype "lua" go here
-		-- and will be executed in order
+  --       -- THIS WILL ONLY BE USED WHEN NO LSP/PROJECT CONFIG IS USED
 		typescript = {
-			require("formatter.filetypes.typescript").eslint_d,
-			function()
-				return {
-					args = {
-						"--stdin",
-						"--fix-to-stdout",
-					},
-					exe = "eslint_d",
-					stdin = true,
-					try_node_modules = true,
-				}
-			end,
+			require("formatter.filetypes.typescript").prettier,
 		},
 		typescriptreact = {
-			require("formatter.filetypes.typescriptreact").eslint_d,
-			function()
-				return {
-					args = {
-						"--stdin",
-						"--fix-to-stdout",
-					},
-					exe = "eslint_d",
-					stdin = true,
-					try_node_modules = true,
-				}
-			end,
+            require("formatter.filetypes.typescriptreact").prettier,
 		},
-        javascript = {
-            require("formatter.filetypes.javascript").eslint_d,
-            function ()
-                return {
-   					args = {
-						"--stdin",
-						"--fix-to-stdout",
-					},
-					exe = "eslint_d",
-					stdin = true,
-					try_node_modules = true,
-             }
-            end
-        },
-        javascriptreact = {
-            require("formatter.filetypes.javascriptreact").eslint_d,
-            function ()
-                return {
-   					args = {
-						"--stdin",
-						"--fix-to-stdout",
-					},
-					exe = "eslint_d",
-					stdin = true,
-					try_node_modules = true,
-             }
-            end
-        },
+		-- javascript = {
+		-- 	require("formatter.filetypes.javascript").eslint_d,
+		-- 	function()
+		-- 		return {
+  --                   cwd = "/home/meyer/src/estest",
+		-- 			args = {
+		-- 			},
+		-- 			exe = "~/src/estest/test.sh",
+		-- 			stdin = true,
+		-- 			try_node_modules = false,
+		-- 		}
+		-- 	end,
+		-- },
+		-- javascriptreact = {
+		-- 	require("formatter.filetypes.javascriptreact").eslint_d,
+		-- 	function()
+		-- 		return {
+  --                   cwd = "/home/meyer/src/estest",
+		-- 			args = {
+		-- 			},
+		-- 			exe = "~/src/estest/test.sh",
+		-- 			stdin = true,
+		-- 			try_node_modules = false,
+		-- 		}
+		-- 	end,
+		-- },
 		cpp = {
 			require("formatter.filetypes.c").clangformat,
 			function()
