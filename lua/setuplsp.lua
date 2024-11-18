@@ -1,7 +1,4 @@
--- https://github.com/neovim/nvim-lspconfig/blob/master/dloc/server_configurations.md
-require("neodev").setup({
-	-- add any options here, or leave empty to use the default settings
-})
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -10,40 +7,64 @@ capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 local root_file = {
-  '.eslintrc',
-  '.eslintrc.js',
-  '.eslintrc.cjs',
-  '.eslintrc.yaml',
-  '.eslintrc.yml',
-  '.eslintrc.json',
-  'eslint.config.js',
-  'eslint.config.mjs',
-  'eslint.config.cjs',
-  'eslint.config.ts',
-  'eslint.config.mts',
-  'eslint.config.cts',
+	".eslintrc",
+	".eslintrc.js",
+	".eslintrc.cjs",
+	".eslintrc.yaml",
+	".eslintrc.yml",
+	".eslintrc.json",
+	"eslint.config.js",
+	"eslint.config.mjs",
+	"eslint.config.cjs",
+	"eslint.config.ts",
+	"eslint.config.mts",
+	"eslint.config.cts",
 }
-require"lspconfig".eslint.setup({
-    capabilities = capabilities,
-    -- root_dir = function (fname)
-    --     local rootDir = vim.fs.dirname(vim.fs.find({"package.json", "pnpm-lock.yaml", "node_modules"}, {upward = true})[1])
-    --     local eCode = os.execute([[bash -c "ls -alh -- ]].. rootDir ..[[ | grep --perl-regexp .eslintrc\..\{2,4\}\|eslint.config\..\{2,3\}"]])
-    --     -- if eCode ~= 0 then
-    --     --     print("funny")
-    --     --     return vim.fs.normalize("~/src/estest")
-    --     -- end
-    --     local util = require"lspconfig.util"
-    --     root_file = util.insert_package_json(root_file, 'eslintConfig', fname)
-    --     local a = util.root_pattern(unpack(root_file))(fname)
-    --     print(a)
-    --     return a
-    -- end,
-    -- fix format command on attach
-    on_attach = function (client, bufnr)
-        vim.keymap.set({"n"}, "<A-F>", "<cmd>EslintFixAll<cr>", {
-            buffer = bufnr,
-        })
-    end
+require("lspconfig").rust_analyzer.setup({
+	settings = {
+		["rust-analyzer"] = {
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			cargo = {
+				buildScripts = {
+					enable = true,
+				},
+			},
+			procMacro = {
+				enable = true,
+			},
+		},
+	},
+	on_attach = function(client, bufnr)
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end,
+	capabilities = capabilities,
+})
+require("lspconfig").eslint.setup({
+	capabilities = capabilities,
+	-- root_dir = function (fname)
+	--     local rootDir = vim.fs.dirname(vim.fs.find({"package.json", "pnpm-lock.yaml", "node_modules"}, {upward = true})[1])
+	--     local eCode = os.execute([[bash -c "ls -alh -- ]].. rootDir ..[[ | grep --perl-regexp .eslintrc\..\{2,4\}\|eslint.config\..\{2,3\}"]])
+	--     -- if eCode ~= 0 then
+	--     --     print("funny")
+	--     --     return vim.fs.normalize("~/src/estest")
+	--     -- end
+	--     local util = require"lspconfig.util"
+	--     root_file = util.insert_package_json(root_file, 'eslintConfig', fname)
+	--     local a = util.root_pattern(unpack(root_file))(fname)
+	--     print(a)
+	--     return a
+	-- end,
+	-- fix format command on attach
+	on_attach = function(client, bufnr)
+		vim.keymap.set({ "n" }, "<A-F>", "<cmd>EslintFixAll<cr>", {
+			buffer = bufnr,
+		})
+	end,
 })
 -- jdtls
 local function setupJDTLS()
@@ -81,11 +102,11 @@ local function setupJDTLS()
 	-- }
 	-- -- vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.stdpath 'config' .. '/resources/vscode-java-test-main/server/*.jar', true), '\n'))
 	local function makeandgetpath()
-        local root = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'});
-        if root == nil then
-            return ""
-        end
-		local path =  root .. "/data"
+		local root = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" })
+		if root == nil then
+			return ""
+		end
+		local path = root .. "/data"
 		os.execute("mkdir -p " .. path)
 		return path
 	end
@@ -144,7 +165,7 @@ end
 -- })
 -- ENDjdtls
 require("lspconfig").emmet_language_server.setup({
-    filetypes = {"css", "scss", "sass", "less", "html"},
+	filetypes = { "css", "scss", "sass", "less", "html" },
 	capabilities = capabilities,
 })
 require("lspconfig").cssls.setup({
@@ -202,9 +223,11 @@ require("lspconfig").kotlin_language_server.setup({
 require("lspconfig").lua_ls.setup({
 	capabilities = capabilities,
 	on_init = function(client)
-		local path = client.workspace_folders[1].name
-		if vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc") then
-			return
+		if client.workspace_folders then
+			local path = client.workspace_folders[1].name
+			if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
+				return
+			end
 		end
 
 		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
@@ -216,20 +239,22 @@ require("lspconfig").lua_ls.setup({
 			-- Make the server aware of Neovim runtime files
 			workspace = {
 				checkThirdParty = false,
-				-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-				library = vim.api.nvim_get_runtime_file("", true),
+				library = {
+					vim.env.VIMRUNTIME,
+					-- Depending on the usage, you might want to add additional paths here.
+					-- "${3rd}/luv/library"
+					-- "${3rd}/busted/library",
+				},
+				-- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+				-- library = vim.api.nvim_get_runtime_file("", true)
 			},
 		})
 	end,
 	settings = {
-		Lua = {
-			completion = {
-				callSnippet = "Replace",
-			},
-		},
+		Lua = {},
 	},
 })
-
+require("vencord")
 local luasnip = require("luasnip")
 local pairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")
@@ -244,11 +269,11 @@ cmp.setup({
 		--  ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
 		-- C-b (back) C-f (forward) for snippet placeholder navigation.
 		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm({
+		["<Tab>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
 		}),
-		["<Tab>"] = cmp.mapping(function(fallback)
+		["<CR>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif luasnip.expand_or_jumpable() then
@@ -268,6 +293,10 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = {
+		{
+			name = "lazydev",
+			group_index = 0,
+		},
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "hrsh7th/cmp-nvim-lsp-signature-help" },

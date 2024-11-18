@@ -1,5 +1,4 @@
 local pkgs = {
-	"nixpkgs-fmt",
 	"jdtls",
 	"yaml-language-server",
 }

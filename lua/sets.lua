@@ -7,6 +7,7 @@ vim.opt.shiftwidth = 4
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.scrolloff = 6
+vim.opt.sloc = "statusline"
 -- eregex.vim 
 vim.g.eregex_default_enable = 1
 

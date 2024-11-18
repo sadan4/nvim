@@ -1,8 +1,83 @@
 vim.opt.termguicolors = true
+-- test
+local function get_listed_bufs()
+	return vim.tbl_filter(function(bufnr)
+		return vim.api.nvim_buf_get_option(bufnr, "buflisted")
+	end, vim.api.nvim_list_bufs())
+end
+-- print(vim.inspect(get_listed_bufs()))
+local function close_empty_unnamed_buffers()
+	-- Get a list of all buffers
+	local buffers = vim.api.nvim_list_bufs()
+	local total = table.getn(get_listed_bufs())
+	local soFar = 0
+	-- Iterate over each buffer
+	for _, bufnr in ipairs(buffers) do
+		-- Check i f the buffer is empty and doesn't have a name
+		if
+			vim.api.nvim_buf_is_loaded(bufnr)
+			and vim.api.nvim_buf_get_name(bufnr) == ""
+			and vim.api.nvim_buf_get_option(bufnr, "buftype") == ""
+		then
+			-- Get all lines in the buffer
+			local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+			-- Initialize a variable to store the total number of characters
+			local total_characters = 0
+
+			-- Iterate over each line and calculate the number of characters
+			for _, line in ipairs(lines) do
+				total_characters = total_characters + #line
+				if total_characters ~= 0 then
+					break
+				end
+			end
+
+			-- Close the buffer i f it's empty:
+			if total_characters == 0 then
+				soFar = soFar + 1
+			end
+		end
+	end
+	if soFar == total then
+		vim.cmd("quit")
+	end
+end
+local close = function()
+	local bd = require("mini.bufremove").delete
+	if vim.bo.modified then
+		local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
+		if choice == 1 then -- Yes
+			vim.cmd.write()
+			bd(0)
+		elseif choice == 2 then -- No
+			bd(0, true)
+		end
+	else
+		bd(0)
+	end
+    close_empty_unnamed_buffers()
+end
+vim.o.confirm = true
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+	callback = function()
+		local layout = vim.api.nvim_call_function("winlayout", {})
+		if
+			layout[1] == "leaf"
+			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+			and layout[3] == nil
+		then
+			vim.cmd("quit")
+		end
+	end,
+})
 require("bufferline").setup({
 	options = {
 		mode = "buffers",
 		numbers = "buffer_id",
+		close_command = close,
+		right_mouse_command = close,
 		indicator = {
 			-- icon = "| ",
 			style = "icon",

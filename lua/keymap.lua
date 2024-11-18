@@ -13,10 +13,10 @@ vim.keymap.set("n", "<C-f>m", tb.keymaps, {})
 vim.keymap.set("n", "<C-f>c", tb.commands, {})
 -- find Documentation
 vim.keymap.set("n", "<C-f>d", tb.man_pages, {})
--- find symbols 
+-- find symbols
 vim.keymap.set("n", "<C-f>v", tb.lsp_workspace_symbols, {})
 -- open tree
-vim.keymap.set({ "i", "n" }, "<C-t>", vim.cmd.NvimTreeFocus, {})
+vim.keymap.set({ "n" }, "<C-t>", vim.cmd.NvimTreeFocus, {})
 -- move and copy lines
 vim.keymap.set({ "i", "n" }, "<A-Up>", function()
 	vim.api.nvim_feedkeys("ddkP", "x", false)
@@ -30,6 +30,12 @@ end, {})
 vim.keymap.set({ "i", "n" }, "<A-S-Down>", function()
 	vim.api.nvim_feedkeys("yyp", "x", false)
 end, {})
+vim.keymap.set("v", "<A-S-Up>", function ()
+    vim.api.nvim_feedkeys("yP", "x", false)
+end)
+vim.keymap.set("v", "<A-S-Down>", function ()
+    vim.api.nvim_feedkeys("yp", "x", false)
+end)
 -- toggle function signature
 vim.keymap.set("i", "<C-S-Space>", function()
 	require("lsp_signature").toggle_float_win()
@@ -71,10 +77,10 @@ vim.keymap.set("n", "<leader>h", ":%S/", {
 vim.keymap.set({ "n", "v" }, "<leader>se", require("nvim-emmet").wrap_with_abbreviation)
 -- open command line with the path of current buffer already inserted
 vim.keymap.set("n", "<leader>e", function()
-    -- print((":e " .. string.gsub(vim.fn.expand("%"), '(.*/)(.*)', '%1')));
+	-- print((":e " .. string.gsub(vim.fn.expand("%"), '(.*/)(.*)', '%1')));
 	vim.api.nvim_feedkeys((":e " .. string.gsub(vim.fn.expand("%"), "(.*/)(.*)", "%1")), "L", false)
 end)
-vim.keymap.set("n", "<leader>c", ":let @+=@\"<CR>")
+vim.keymap.set("n", "<leader>c", ':let @+=@"<CR>')
 -- training
 vim.keymap.set("n", "<Left>", ':echoe "Use h"<CR>')
 vim.keymap.set("n", "<Right>", ':echoe "Use l"<CR>')
@@ -85,12 +91,44 @@ vim.keymap.set("i", "<Left>", '<ESC>:echoe "Use h"<CR>i')
 vim.keymap.set("i", "<Right>", '<ESC>:echoe "Use l"<CR>i')
 vim.keymap.set("i", "<Up>", '<ESC>:echoe "Use k"<CR>i')
 vim.keymap.set("i", "<Down>", '<ESC>:echoe "Use j"<CR>i')
--- https://stackoverflow.com/questions/1841480/how-to-use-lowercase-marks-as-global-in-vim
--- Use lowercase for global marks and uppercase for local marks.
-local low = function(i) return string.char(97+i) end
-local upp = function(i) return string.char(65+i) end
-
-for i=0,25 do vim.keymap.set("n", "m"..low(i), "m"..upp(i)) end
-for i=0,25 do vim.keymap.set("n", "m"..upp(i), "m"..low(i)) end
-for i=0,25 do vim.keymap.set("n", "'"..low(i), "'"..upp(i)) end
-for i=0,25 do vim.keymap.set("n", "'"..upp(i), "'"..low(i)) end
+vim.keymap.set({"n", "v", "i"}, "<MiddleMouse>", "<RightMouse>", {
+    noremap = true
+})
+vim.cmd.aunmenu([[PopUp.How-to\ disable\ mouse]])
+vim.cmd.aunmenu([[PopUp.Paste]])
+vim.cmd.aunmenu([[PopUp.Select\ All]])
+vim.cmd.aunmenu([[PopUp.Inspect]])
+-- vim.api.nvim_create_autocmd("BufAdd", {
+-- 	callback = function(e)
+--         vim.keymap.set({"n", "i", "v"}, "<MiddleMouse>", "<NOP>", {
+--             buffer = e.buf
+--         })
+-- 	end,
+-- })
+-- vim.api.nvim_create_autocmd("User", {
+--     pattern = "BufferLineHoverOver",
+-- 	callback = function(e)
+--         print("over")
+--         vim.keymap.del({"n", "i", "v"}, "<MiddleMouse>", {
+--             buffer = e.buf
+--         })
+-- 	end,
+-- })
+-- vim.api.nvim_create_autocmd("User", {
+--     pattern = "BufferLineHoverOut",
+-- 	callback = function(e)
+--         print("out")
+--         vim.keymap.set({"n", "i", "v"}, "<MiddleMouse>", "<NOP>", {
+--             buffer = e.buf
+--         })
+-- 	end,
+-- })
+-- -- https://stackoverflow.com/questions/1841480/how-to-use-lowercase-marks-as-global-in-vim
+-- -- Use lowercase for global marks and uppercase for local marks.
+-- local low = function(i) return string.char(97+i) end
+-- local upp = function(i) return string.char(65+i) end
+--
+-- for i=0,25 do vim.keymap.set("n", "m"..low(i), "m"..upp(i)) end
+-- for i=0,25 do vim.keymap.set("n", "m"..upp(i), "m"..low(i)) end
+-- for i=0,25 do vim.keymap.set("n", "'"..low(i), "'"..upp(i)) end
+-- for i=0,25 do vim.keymap.set("n", "'"..upp(i), "'"..low(i)) end

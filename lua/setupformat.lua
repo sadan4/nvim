@@ -15,7 +15,7 @@ require("formatter").setup({
 			require("formatter.filetypes.nix").nixpkgs_fmt,
 			function()
 				return {
-					exe = "nixpkgs-fmt",
+					exe = "nixfmt",
 					stdin = true,
 					args = {},
 				}

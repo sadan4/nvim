@@ -1,18 +1,74 @@
 local plugins = {
-    {
-        "christoomey/vim-titlecase"
-    },
+	{
+		"norcalli/nvim-colorizer.lua",
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		init = function()
+			vim.g.lazydev_enabled = true
+		end,
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+	-- { -- optional blink completion source for require statements and module annotations
+	-- 	"saghen/blink.cmp",
+	-- 	opts = {
+	-- 		sources = {
+	-- 			-- add lazydev to your completion providers
+	-- 			completion = {
+	-- 				enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
+	-- 			},
+	-- 			providers = {
+	-- 				-- dont show LuaLS require statements when lazydev has items
+	-- 				lsp = { fallback_for = { "lazydev" } },
+	-- 				lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
+	{
+		"echasnovski/mini.bufremove",
+		version = "*",
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		-- opts = {
+		-- 	-- add any options here
+		-- },
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+	},
+	{
+		"lewis6991/hover.nvim",
+	},
+	{
+		"christoomey/vim-titlecase",
+	},
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
 		config = function()
 			require("nvim-surround").setup({
-                keymaps = {
-                    visual = "<leader>s",
-                    visual_line = "<leader>s"
-                }
-            })
+				keymaps = {
+					visual = "<leader>s",
+					visual_line = "<leader>s",
+				},
+			})
 		end,
 	},
 	{
@@ -104,14 +160,9 @@ local plugins = {
 	{
 		"neovim/nvim-lspconfig",
 	},
-	{ "folke/neodev.nvim", opts = {} },
+
 	{
 		"p00f/clangd_extensions.nvim",
-	},
-	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {},
 	},
 	{
 		"abecodes/tabout.nvim",
@@ -190,7 +241,23 @@ local plugins = {
 	},
 	{
 		"kevinhwang91/nvim-ufo",
-		dependencies = { "kevinhwang91/promise-async" },
+		dependencies = {
+			"kevinhwang91/promise-async",
+			{
+				"luukvbaal/statuscol.nvim",
+				config = function()
+					local builtin = require("statuscol.builtin")
+					require("statuscol").setup({
+						relculright = true,
+						segments = {
+							{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+							{ text = { "%s" }, click = "v:lua.ScSa" },
+							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+						},
+					})
+				end,
+			},
+		},
 	},
 	--{
 	--	'mfussenegger/nvim-lint'
