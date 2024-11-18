@@ -14,8 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 if vim.g.vscode then
     require"vscodePlugins"
 else
+require"sets"
 require"plugins"
 require"setup"
 require"keymap"
-require"sets"
 end
