@@ -1,6 +1,9 @@
 local tb = require("telescope.builtin")
 
 vim.g.mapleader = " "
+
+vim.keymap.set("n", "<C-b>", "<Nop>");
+vim.keymap.set("n", "<C-f>", "<Nop>");
 -- find Files
 vim.keymap.set("n", "<C-f>f", tb.find_files, {})
 -- find Text
@@ -42,7 +45,6 @@ vim.keymap.set("i", "<C-S-Space>", function()
 end, {})
 -- format and vplit remaps
 vim.keymap.set({ "n", "i" }, "<A-F>", vim.cmd.Format, {})
-vim.keymap.set({ "i", "n" }, "<C-\\>", vim.cmd.vsplit, {})
 -- vscode fold and unfold
 vim.keymap.set("n", "<C-[>", "zc", {})
 vim.keymap.set("n", "<C-]>", "zo", {})
@@ -96,10 +98,55 @@ vim.keymap.set("i", "<Down>", '<ESC>:echoe "Use j"<CR>i')
 vim.keymap.set({"n", "v", "i"}, "<MiddleMouse>", "<RightMouse>", {
     noremap = true
 })
+
 vim.cmd.aunmenu([[PopUp.How-to\ disable\ mouse]])
 vim.cmd.aunmenu([[PopUp.Paste]])
 vim.cmd.aunmenu([[PopUp.Select\ All]])
 vim.cmd.aunmenu([[PopUp.Inspect]])
+-- make #, closer to the cursor, fw search and * bw
+vim.keymap.set("n", "#", "*", {
+    noremap = true
+})
+vim.keymap.set("n", "*", "#", {
+    noremap = true
+})
+
+-- moving bewteen splits
+vim.keymap.set("n", "<M-C-S-L>", "<C-w>l");
+vim.keymap.set("n", "<M-C-S-K>", "<C-w>k");
+vim.keymap.set("n", "<M-C-S-J>", "<C-w>j");
+vim.keymap.set("n", "<M-C-S-H>", "<C-w>h");
+-- close
+vim.keymap.set("n", "<M-C-S-C>", "<C-w>c");
+-- quit
+vim.keymap.set("n", "<M-C-S-Q>", "<C-w>q")
+-- resizing
+-- 3 lower width, 4 increace width
+vim.keymap.set("n", "<M-C-S-3>", "<C-w><");
+vim.keymap.set("n", "<M-C-S-4>", "<C-w>>");
+-- e lower height, r increase height
+vim.keymap.set("n", "<M-C-S-E>", "<C-w>>");
+vim.keymap.set("n", "<M-C-S-R>", "<C-w>>");
+
+-- movement:
+-- o move left, p move right
+vim.keymap.set("n", "<M-C-S-P>", "<C-w>L");
+vim.keymap.set("n", "<M-C-S-O>", "<C-w>H");
+
+-- 9 move down, 0 move up
+vim.keymap.set("n", "<M-C-S-0>", "<C-w>K");
+vim.keymap.set("n", "<M-C-S-9>", "<C-w>J");
+-- ./init.lua
+vim.keymap.set({ "i", "n" }, "<M-C-S-\\>", vim.cmd.vsplit, {})
+vim.keymap.set({ "i", "n" }, "<M-C-S-5>", vim.cmd.split, {})
+-- go to file under cursor
+vim.keymap.set({"n"}, "<M-C-S-F>", "<C-w>F");
+-- only
+-- makes more sense to use O for moving splits
+vim.keymap.set({ "n" }, "<M-C-S-U>", vim.cmd.only, {})
+-- open Definition in split view
+vim.keymap.set({ "n" }, "<M-C-S-D>", "<C-w>}", {})
+
 -- vim.api.nvim_create_autocmd("BufAdd", {
 -- 	callback = function(e)
 --         vim.keymap.set({"n", "i", "v"}, "<MiddleMouse>", "<NOP>", {
