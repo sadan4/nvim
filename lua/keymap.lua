@@ -87,6 +87,8 @@ vim.keymap.set("n", "<Right>", ':echoe "Use l"<CR>')
 vim.keymap.set("n", "<Up>", ':echoe "Use k"<CR>')
 vim.keymap.set("n", "<Down>", ':echoe "Use j"<CR>')
 
+vim.keymap.set({"i", "v", "n"}, "<C-c>", '<CMD>echoe "Use caps"<CR>')
+
 vim.keymap.set("i", "<Left>", '<ESC>:echoe "Use h"<CR>i')
 vim.keymap.set("i", "<Right>", '<ESC>:echoe "Use l"<CR>i')
 vim.keymap.set("i", "<Up>", '<ESC>:echoe "Use k"<CR>i')

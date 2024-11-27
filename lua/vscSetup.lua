@@ -25,6 +25,7 @@ end)
 vim.keymap.set("n", "<leader>lg", function ()
     vsc.action("lazygit.openLazygit")
 end)
+vim.keymap.set({"n", "i", "v"}, "<C-c>", "<CMD>echoe \"Use Caps\"<CR>")
 -- for some reason, this plugin does not work with keymaps that start with <C-f>
 -- they are done through vsc
 --
