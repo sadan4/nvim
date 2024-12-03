@@ -109,7 +109,7 @@ vim.cmd("nmap <M-C-S-F> <C-w>F")
 -- makes more sense to use O for moving splits
 vim.cmd("nmap <M-C-S-U> <C-w><C-o>")
 -- open Definition in split view
-vim.cmd("nmap <M-C-S-D> <C-w>}")
+vim.cmd("nmap <M-C-S-D> <C-w>gd")
 -- move over folds
 vim.cmd("nmap j gj")
 vim.cmd("nmap k gk")
