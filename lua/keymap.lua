@@ -4,6 +4,12 @@ vim.g.mapleader = " "
 
 vim.keymap.set("n", "<C-b>", "<Nop>");
 vim.keymap.set("n", "<C-f>", "<Nop>");
+-- <S-k> is mapped to hover
+-- unmap <S-j>
+vim.keymap.set({"v", "n"}, "J", "<Nop>")
+-- use <S-h> for home and <S-l> for end
+vim.keymap.set({"n", "v", "o"}, "H", "g^")
+vim.keymap.set({"n", "v", "o"}, "L", "g_")
 -- find Files
 vim.keymap.set("n", "<C-f>f", tb.find_files, {})
 -- find Text
