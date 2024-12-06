@@ -104,7 +104,9 @@ vim.cmd("nmap <M-C-S-5> <C-w>s")
 vim.cmd("imap <M-C-S-\\> <C-w>v")
 vim.cmd("imap <M-C-S-5> <C-w>s")
 -- go to file under cursor
-vim.cmd("nmap <M-C-S-F> <C-w>F")
+vim.keymap.set("n", "<M-C-S-F>", function ()
+    vsc.action("seito-openfile.openFileFromText")
+end)
 -- only
 -- makes more sense to use O for moving splits
 vim.cmd("nmap <M-C-S-U> <C-w><C-o>")
