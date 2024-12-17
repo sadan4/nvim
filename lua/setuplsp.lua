@@ -20,6 +20,7 @@ local root_file = {
 	"eslint.config.mts",
 	"eslint.config.cts",
 }
+require'lspconfig'.lemminx.setup{}
 require("lspconfig").vimls.setup({
 	cmd = { "vim-language-server", "--stdio" },
 	filetypes = { "vim" },
