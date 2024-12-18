@@ -20,7 +20,8 @@ local root_file = {
 	"eslint.config.mts",
 	"eslint.config.cts",
 }
-require'lspconfig'.lemminx.setup{}
+require("lspconfig").gopls.setup({})
+require("lspconfig").lemminx.setup({})
 require("lspconfig").vimls.setup({
 	cmd = { "vim-language-server", "--stdio" },
 	filetypes = { "vim" },
@@ -205,8 +206,30 @@ require("lspconfig").bashls.setup({
 require("lspconfig").html.setup({
 	capabilities = capabilities,
 })
-require("lspconfig").nil_ls.setup({
+require("lspconfig").nixd.setup({
+	cmd = { "nixd", "--semantic-tokens=true", "--inlay-hints=false" },
+	formatting = {
+		command = { "nixfmt" },
+	},
 	capabilities = capabilities,
+	settings = {
+		nixd = {
+			nixpkgs = {
+				expr = "import <nixpkgs> {}",
+			},
+			options = {
+				nixos = {
+					expr = '(builtins.getFlake "/home/meyer/nixos").nixosConfigurations.nixd.options',
+				},
+				home_manager = {
+					expr = '(builtins.getFlake "/home/meyer/nixos").homeConfigurations.nixd.options',
+				},
+				flake_parts = {
+					expr = 'let flake = builtins.getFlake ("/home/meyer/nixos"); in flake.debug.options // flake.currentSystem.options',
+				},
+			},
+		},
+	},
 })
 require("lspconfig").jsonls.setup({
 	capabilities = capabilities,

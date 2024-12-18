@@ -1,14 +1,115 @@
-local logged = false;
-local function test(a, b)
-    if logged then return end
-	vim.notify(vim.inspect(a))
-	vim.notify(vim.inspect(b))
-    logged = true
+-- this whole file is complete fucking horror
+local logged = false
+
+-- searches the list of keymaps (arr)
+-- this can be gotten from vim.api.nvim_get_keymap(mode)
+-- or vim.api.nvim_buf_get_keymap(buf, mode)
+-- to see if it has any mappings with (lhs)
+local function hasLHS(arr, lhs)
+	for key, value in pairs(arr) do
+		if value.lhs == lhs then
+			return value
+		end
+	end
+	return nil
 end
+-- returns
+local function makeOldRightClick()
+	-- try buffer local mappings
+	local toRet = hasLHS(vim.api.nvim_buf_get_keymap(0, ""), "<RightMouse>")
+	if toRet ~= nil then
+		return toRet
+	end
+	toRet = hasLHS(vim.api.nvim_get_keymap(""), "<RightMouse>")
+	if toRet == nil then
+		return function() end
+	elseif toRet.callback ~= nil then
+		return toRet.callback
+	elseif toRet.rhs ~= nil then
+		return toRet.rhs
+	else
+		error("how")
+	end
+end
+local oldRightClick = nil
+local function createOldRightClick()
+	if oldRightClick == nil then
+		oldRightClick = makeOldRightClick()
+	end
+end
+---@generic T
+---@param tbl table<T>
+---@param el T
+---@return number | -1
+local function indexOf(tbl, el)
+	for index, value in ipairs(tbl) do
+		if value == el then
+			return index
+		end
+	end
+	return -1
+end
+local windows = {}
+local openWindowCount = 0
+---@param rhs string
+local function runTextMapping(rhs)
+	vim.keymap.set("", "<Plug>(NotifyTempRightClickMap)", rhs)
+	vim.cmd([[exec "norm \<Plug>(NotifyTempRightClickMap)"]])
+	vim.api.nvim_del_keymap("", "<Plug>(NotifyTempRightClickMap)")
+end
+local function runPassthruMapping()
+	if type(oldRightClick) == "function" then
+		oldRightClick()
+	elseif type(oldRightClick) == "string" then
+		runTextMapping(oldRightClick)
+	else
+		error("Unknown Type")
+	end
+end
+local function makeCloseMap(windowHandle)
+	openWindowCount = openWindowCount + 1
+	table.insert(windows, windowHandle)
+	if openWindowCount == 1 then
+		createOldRightClick()
+		vim.keymap.set("", "<RightMouse>", function()
+			for _, v in pairs(windows) do
+				local _pos = vim.api.nvim_win_get_position(v)
+				local min_y = _pos[1]
+				local min_x = _pos[2]
+				local max_x = vim.api.nvim_win_get_width(v) + min_x
+				local max_y = vim.api.nvim_win_get_height(v) + min_y
+				local pos = vim.fn.getmousepos()
+				local x = pos.screencol
+				local y = pos.screenrow
+				-- vim.notify(string.format("%s, %s, %s, %s, %s, %s", min_x, max_x, min_y, max_y, x, y))
+				if (x >= min_x and x <= max_x) and (y >= min_y and y <= max_y) then
+					vim.api.nvim_win_close(v, true)
+					return
+				end
+			end
+			runPassthruMapping()
+		end)
+	end
+end
+local function removeCloseMap(winHandle)
+	openWindowCount = openWindowCount - 1
+	local index = indexOf(windows, winHandle)
+	if index ~= -1 then
+		table.remove(windows, index)
+	else
+		vim.notify("how the fuck")
+	end
+	if openWindowCount == 0 then
+		vim.api.nvim_del_keymap("", "<RightMouse>")
+		oldRightClick = nil
+	end
+end
+
 require("notify").setup({
 	max_width = 65,
 	max_height = 7,
-    on_open = test
+	on_open = makeCloseMap,
+	on_close = removeCloseMap,
 })
 vim.notify = require("notify")
 require("noice").setup({
