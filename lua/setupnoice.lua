@@ -101,6 +101,7 @@ local function removeCloseMap(winHandle)
 	end
 	if openWindowCount == 0 then
 		vim.api.nvim_del_keymap("", "<RightMouse>")
+        vim.keymap.set("n", "<RightMouse>", oldRightClick)
 		oldRightClick = nil
 	end
 end
