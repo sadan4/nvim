@@ -13,12 +13,17 @@ local function hasLHS(arr, lhs)
 	end
 	return nil
 end
--- returns
+
 local function makeOldRightClick()
 	-- try buffer local mappings
 	local toRet = hasLHS(vim.api.nvim_buf_get_keymap(0, ""), "<RightMouse>")
-	if toRet ~= nil then
-		return toRet
+	if toRet == nil then
+	elseif toRet.callback ~= nil then
+		return toRet.callback
+	elseif toRet.rhs then
+		return toRet.rhs
+	else
+		error("how")
 	end
 	toRet = hasLHS(vim.api.nvim_get_keymap(""), "<RightMouse>")
 	if toRet == nil then
@@ -101,7 +106,7 @@ local function removeCloseMap(winHandle)
 	end
 	if openWindowCount == 0 then
 		vim.api.nvim_del_keymap("", "<RightMouse>")
-        vim.keymap.set("n", "<RightMouse>", oldRightClick)
+		vim.keymap.set("n", "<RightMouse>", oldRightClick)
 		oldRightClick = nil
 	end
 end
