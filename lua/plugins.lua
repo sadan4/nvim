@@ -1,27 +1,5 @@
 local plugins = {
-	{
-		"marcussimonsen/let-it-snow.nvim",
-		cmd = "LetItSnow", -- Wait with loading until command is run
-		opts = {},
-	},
-	{
-		"norcalli/nvim-colorizer.lua",
-	},
-	{
-		"folke/lazydev.nvim",
-		ft = "lua", -- only load on lua files
-		init = function()
-			vim.g.lazydev_enabled = true
-		end,
-		opts = {
-			library = {
-				-- See the configuration section for more details
-				-- Load luvit types when the `vim.uv` word is found
-				{ path = "luvit-meta/library", words = { "vim%.uv" } },
-			},
-		},
-	},
-	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+
 	-- { -- optional blink completion source for require statements and module annotations
 	-- 	"saghen/blink.cmp",
 	-- 	opts = {
@@ -38,10 +16,7 @@ local plugins = {
 	-- 		},
 	-- 	},
 	-- },
-	{
-		"echasnovski/mini.bufremove",
-		version = "*",
-	},
+
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -75,11 +50,6 @@ local plugins = {
 				},
 			})
 		end,
-	},
-	{
-		"akinsho/bufferline.nvim",
-		version = "*",
-		dependencies = "nvim-tree/nvim-web-devicons",
 	},
 	{
 		"akinsho/toggleterm.nvim",
@@ -118,13 +88,7 @@ local plugins = {
 		"olrtg/nvim-emmet",
 	},
 	{
-		"lambdalisue/suda.vim",
-	},
-	{
 		"sadan4/eregex.vim",
-	},
-	{
-		"windwp/nvim-ts-autotag",
 	},
 	{
 		"barrett-ruth/live-server.nvim",
@@ -145,9 +109,6 @@ local plugins = {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 	{
-		"andweeb/presence.nvim",
-	},
-	{
 		"jose-elias-alvarez/null-ls.nvim",
 	},
 	-- {
@@ -165,65 +126,8 @@ local plugins = {
 	{
 		"neovim/nvim-lspconfig",
 	},
-
-	{
-		"p00f/clangd_extensions.nvim",
-	},
-	{
-		"abecodes/tabout.nvim",
-		lazy = false,
-		requires = {
-			"nvim-treesitter/nvim-treesitter",
-			"L3MON4D3/LuaSnip",
-			"hrsh7th/nvim-cmp",
-		},
-		event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
-		priority = 1000,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-	},
-	{
-		"numToStr/Comment.nvim",
-		opts = {
-			-- add any options here
-		},
-		lazy = false,
-	},
-
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = true,
-		-- use opts = {} for passing setup options
-		-- this is equalent to setup({}) function
-		opts = {},
-	},
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
-	},
 	{
 		"mhartington/formatter.nvim",
-	},
-	{
-		"nvim-telescope/telescope.nvim",
-		tag = "0.1.5",
-		opts = {
-			extensions = {
-				fzf = {
-					fuzzy = true, -- false will only do exact matching
-					override_generic_sorter = true, -- override the generic sorter
-					override_file_sorter = true, -- override the file sorter
-					case_mode = "ignore_case", -- or "ignore_case" or "respect_case" or smart_case
-					-- the default case_mode is "smart_case"
-				},
-			},
-		},
-		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
 		"hrsh7th/cmp-nvim-lsp",
@@ -240,29 +144,6 @@ local plugins = {
 	},
 	{
 		"saadparwaiz1/cmp_luasnip",
-	},
-	{
-		"nvim-tree/nvim-tree.lua",
-	},
-	{
-		"kevinhwang91/nvim-ufo",
-		dependencies = {
-			"kevinhwang91/promise-async",
-			{
-				"luukvbaal/statuscol.nvim",
-				config = function()
-					local builtin = require("statuscol.builtin")
-					require("statuscol").setup({
-						relculright = true,
-						segments = {
-							{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-							{ text = { "%s" }, click = "v:lua.ScSa" },
-							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-						},
-					})
-				end,
-			},
-		},
 	},
 	--{
 	--	'mfussenegger/nvim-lint'
