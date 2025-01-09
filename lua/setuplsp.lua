@@ -207,7 +207,7 @@ require("lspconfig").html.setup({
 	capabilities = capabilities,
 })
 require("lspconfig").nixd.setup({
-	cmd = { "nixd", "--semantic-tokens=true", "--inlay-hints=false" },
+	cmd = { "nixd", "--semantic-tokens=true", "--inlay-hints=true" },
 	formatting = {
 		command = { "nixfmt" },
 	},
