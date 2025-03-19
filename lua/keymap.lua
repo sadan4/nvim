@@ -4,6 +4,8 @@ vim.g.mapleader = " "
 
 vim.keymap.set("n", "<C-b>", "<Nop>");
 vim.keymap.set("n", "<C-f>", "<Nop>");
+vim.keymap.set("n", "<A-Left>", "<C-o>");
+vim.keymap.set("n", "<A-Right>", "<C-i>");
 -- <S-k> is mapped to hover
 -- unmap <S-j>
 vim.keymap.set({"v", "n"}, "J", "<Nop>")
@@ -46,9 +48,7 @@ vim.keymap.set("v", "<A-S-Down>", function ()
     vim.api.nvim_feedkeys("yp", "x", false)
 end)
 -- toggle function signature
-vim.keymap.set("i", "<C-S-Space>", function()
-	require("lsp_signature").toggle_float_win()
-end, {})
+-- Moved to noice
 -- format and vplit remaps
 vim.keymap.set({ "n", "i" }, "<A-F>", vim.cmd.Format, {})
 -- vscode fold and unfold
@@ -87,6 +87,11 @@ vim.keymap.set({ "n", "v" }, "<leader>se", require("nvim-emmet").wrap_with_abbre
 vim.keymap.set("n", "<leader>e", function()
 	-- print((":e " .. string.gsub(vim.fn.expand("%"), '(.*/)(.*)', '%1')));
 	vim.api.nvim_feedkeys((":e " .. string.gsub(vim.fn.expand("%"), "(.*/)(.*)", "%1")), "L", false)
+end)
+-- open command line with the path of current buffer already inserted
+vim.keymap.set("n", "<leader>r", function()
+	-- print((":r " .. string.gsub(vim.fn.expand("%"), '(.*/)(.*)', '%1')));
+	vim.api.nvim_feedkeys((":r " .. string.gsub(vim.fn.expand("%"), "(.*/)(.*)", "%1")), "L", false)
 end)
 vim.keymap.set("n", "<leader>c", ':let @+=@"<CR>')
 -- training

@@ -117,7 +117,15 @@ require("notify").setup({
     on_open = makeCloseMap,
     on_close = removeCloseMap,
 })
+vim.api.nvim_create_user_command("Notifications", "Telescope notify", {
+    force = true,
+})
 vim.notify = require("notify")
+vim.keymap.set({"n", "i"}, "<C-S-Space>", function()
+    local api = require("noice.lsp.docs")
+    local message = api.get("signature")
+    api.hide(message)
+end)
 require("noice").setup({
     cmdline = {
         enabled = true, -- enables the Noice cmdline UI

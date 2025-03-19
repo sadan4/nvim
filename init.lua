@@ -19,3 +19,6 @@ require"plugins"
 require"setup"
 require"keymap"
 end
+_G.dbg = function (obj)
+    vim.notify(vim.inspect(obj))
+end
