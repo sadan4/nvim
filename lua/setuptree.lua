@@ -42,7 +42,7 @@ local function myOnAttach(bufnr)
         if node.nodes ~= nil then
             api.node.open.edit()
         end
-    end)
+    end, opts("Open folder"))
 end
 vim.keymap.set("n", "<A-t>", "<Cmd>NvimTreeFindFile<CR>")
 -- OR setup with some options
