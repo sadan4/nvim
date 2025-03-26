@@ -84,9 +84,9 @@ local plugins = {
 	{
 		"akinsho/toggleterm.nvim",
 	},
-	{
-		dir = "/home/meyer/dev/lua/vencord.nvim",
-	},
+	-- {
+		-- dir = "/home/meyer/dev/lua/vencord.nvim",
+        -- },
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "make",

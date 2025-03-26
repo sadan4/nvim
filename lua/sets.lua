@@ -14,6 +14,8 @@ vim.g.eregex_default_enable = 1
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
 	callback = function()
-		package.loaded.presence:update()
+        if package ~= nil and package.loaded ~= nil and package.loaded.presence ~= nil then
+            package.loaded.presence:update()
+        end
 	end,
 })
